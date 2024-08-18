@@ -8,11 +8,6 @@ public class StringSchema {
     public StringSchema() {
     }
 
-    public StringSchema required() {
-        this.isNotNull = true;
-        return this;
-    }
-
     public StringSchema minLength(int num) {
         this.minL = num;
         return this;
@@ -20,6 +15,11 @@ public class StringSchema {
 
     public StringSchema contains(String string) {
         this.contString = string;
+        return this;
+    }
+
+    public StringSchema required() {
+        this.isNotNull = true;
         return this;
     }
 
