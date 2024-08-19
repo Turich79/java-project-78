@@ -2,7 +2,8 @@ package hexlet.code;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class NumberSchemaTest {
 
@@ -15,7 +16,7 @@ class NumberSchemaTest {
         // Пока не вызван метод required(), null и пустая строка считаются валидным
         assertTrue(schema.isValid(5)); // true
         assertTrue(schema.isValid(null)); // true
-        assertTrue(schema.positive().isValid(null));//true
+        assertTrue(schema.positive().isValid(null)); //true
 
         schema.required();
         assertFalse(schema.isValid(null)); // false

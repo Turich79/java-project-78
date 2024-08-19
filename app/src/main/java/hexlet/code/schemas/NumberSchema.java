@@ -1,56 +1,39 @@
 package hexlet.code.schemas;
 
-public class NumberSchema {
-    private boolean isNotNull;
-    private boolean isPositive;
-    private Integer min = Integer.MIN_VALUE;
-    private Integer max = Integer.MAX_VALUE;
-
+public class NumberSchema extends BaseSchema {
     public NumberSchema() {
     }
 
     public NumberSchema required() {
-        this.isNotNull = true;
+        addFilter("required", (value ->
+                value instanceof Integer && !(value == null)));
         return this;
     }
 
     public NumberSchema positive() {
-        this.isPositive = true;
+        var isNotNull = getMap().containsKey("required");
+        if (isNotNull) {
+            addFilter("positive", (value -> {
+                var flag = value instanceof Integer;
+                var intValue = (Integer) value;
+                return (flag && intValue > 0);
+            }));
+        } else {
+            addFilter("positive", (value -> {
+                var flag = value instanceof Integer;
+                var intValue = (Integer) value;
+                return (flag && intValue > 0) || value == null;
+            }));
+        }
         return this;
     }
 
     public NumberSchema range(Integer min, Integer max) {
-        this.min = min;
-        this.max = max;
+        addFilter("range", (value -> {
+            var flag = value instanceof Integer;
+            var intValue = ((Integer) value).intValue();
+            return flag && intValue >= min && intValue <= max;
+        }));
         return this;
     }
-
-    public boolean isValid(Object data) {
-        if (data == null) {
-            if (isNotNull) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        int number;
-        if (!(data instanceof Integer)) {
-            number = Integer.getInteger((String) data);
-        } else {
-            number = ((Integer) data).intValue();
-        }
-
-        if (isPositive && number <= 0) {
-            return false;
-        }
-
-        if (number < min || number > max) {
-            return false;
-        }
-
-        return true;
-    }
-
-
 }
