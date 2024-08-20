@@ -3,9 +3,6 @@ package hexlet.code.schemas;
 import java.util.Map;
 
 public class MapSchema extends BaseSchema {
-    public MapSchema() {
-    }
-
     public MapSchema required() {
         addFilter("required", (value ->
                 value instanceof Map<?, ?> && !(value == null)));

@@ -5,17 +5,15 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 public abstract class BaseSchema<T> {
-    private Map<String, Predicate<Object>> map = new HashMap<>();
+    private Map<String, Predicate<Object>> mapOfRules = new HashMap<>();
 
     protected void addFilter(String key, Predicate<Object> value) {
-        map.put(key, value);
+        mapOfRules.put(key, value);
     }
 
     public boolean isValid(Object data) {
-        var entries = map.entrySet();
+        var entries = mapOfRules.entrySet();
         for (var entry : entries) {
-//            System.out.println("Key:"+entry.getKey());
-//            System.out.println("Value:"+entry.getValue());
             var flag = entry.getValue().test(data);
             if (!flag) {
                 return false;
@@ -24,7 +22,7 @@ public abstract class BaseSchema<T> {
         return true;
     }
 
-    public Map<String, Predicate<Object>> getMap() {
-        return map;
+    public Map<String, Predicate<Object>> getMapOfRules() {
+        return mapOfRules;
     }
 }

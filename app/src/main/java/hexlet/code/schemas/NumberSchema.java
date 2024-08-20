@@ -1,9 +1,6 @@
 package hexlet.code.schemas;
 
 public class NumberSchema extends BaseSchema {
-    public NumberSchema() {
-    }
-
     public NumberSchema required() {
         addFilter("required", (value ->
                 value instanceof Integer && !(value == null)));
@@ -11,7 +8,7 @@ public class NumberSchema extends BaseSchema {
     }
 
     public NumberSchema positive() {
-        var isNotNull = getMap().containsKey("required");
+        var isNotNull = getMapOfRules().containsKey("required");
         if (isNotNull) {
             addFilter("positive", (value -> {
                 var flag = value instanceof Integer;

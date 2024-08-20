@@ -1,9 +1,6 @@
 package hexlet.code.schemas;
 
 public class StringSchema extends BaseSchema {
-    public StringSchema() {
-    }
-
     public StringSchema minLength(int num) {
         addFilter("minLength", (value ->
                 value instanceof String && ((String) value).length() >= num));

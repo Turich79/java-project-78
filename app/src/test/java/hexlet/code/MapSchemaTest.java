@@ -40,19 +40,11 @@ class MapSchemaTest {
 
         var schema = v.map();
 
-        // shape позволяет описывать валидацию для значений каждого ключа объекта Map
-        // Создаем набор схем для проверки каждого ключа проверяемого объекта
-        // Для значения каждого ключа - своя схема
         Map<String, BaseSchema<String>> schemas = new HashMap<>();
 
-        // Определяем схемы валидации для значений свойств "firstName" и "lastName"
-        // Имя должно быть строкой, обязательно для заполнения
         schemas.put("firstName", v.string().required());
-        // Фамилия обязательна для заполнения и должна содержать не менее 2 символов
         schemas.put("lastName", v.string().required().minLength(2));
 
-        // Настраиваем схему `MapSchema`
-        // Передаем созданный набор схем в метод shape()
         schema.shape(schemas);
 
         // Проверяем объекты
