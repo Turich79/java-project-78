@@ -22,7 +22,7 @@ public abstract class BaseSchema<T> {
         return true;
     }
 
-    public Map<String, Predicate<Object>> getMapOfRules() {
+    public final Map<String, Predicate<Object>> getMapOfRules() {
         return mapOfRules;
     }
 }
