@@ -5,13 +5,13 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 public abstract class BaseSchema<T> {
-    private Map<String, Predicate<Object>> mapOfRules = new HashMap<>();
+    private final Map<String, Predicate<Object>> mapOfRules = new HashMap<>();
 
-    protected void addFilter(String key, Predicate<Object> value) {
+    protected final void addFilter(String key, Predicate<Object> value) {
         mapOfRules.put(key, value);
     }
 
-    public boolean isValid(Object data) {
+    public final boolean isValid(Object data) {
         var entries = mapOfRules.entrySet();
         for (var entry : entries) {
             var flag = entry.getValue().test(data);
