@@ -1,16 +1,12 @@
 plugins {
     id("java")
-//    application
     checkstyle
     jacoco
 }
 
-group = "io.hexlet"
+group = "hexlet.code"
 version = "1.0-SNAPSHOT"
 
-//application {
-//    mainClass = "hexlet.code.App"
-//}
 
 repositories {
     mavenCentral()
@@ -25,10 +21,12 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
-}
-
-tasks.test {
     finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
 }
 
-tasks.jacocoTestReport { reports { xml.required.set(true) } }
+tasks.jacocoTestReport { reports {
+    xml.required.set(true)
+    csv.required = false
+    html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
+    }
+}
