@@ -14,12 +14,12 @@ public final class MapSchema extends BaseSchema {
         return this;
     }
 
-    public MapSchema shape(Map<String, BaseSchema<String>> schemasMap) {
-        addFilter("shape", map -> check((Map<String, BaseSchema<String>>) map, schemasMap));
+    public MapSchema shape(Map<String, BaseSchema> schemasMap) {
+        addFilter("shape", map -> check((Map<String, BaseSchema>) map, schemasMap));
         return this;
     }
 
-    public boolean check(Map<String, BaseSchema<String>> baseMap, Map<String, BaseSchema<String>> schemasMap) {
+    public boolean check(Map<String, BaseSchema> baseMap, Map<String, BaseSchema> schemasMap) {
         for (var pair : schemasMap.entrySet()) {
             var key = pair.getKey();
             if (!pair.getValue().isValid(baseMap.get(key))) {
