@@ -2,19 +2,12 @@ package hexlet.code.schemas;
 
 public final class NumberSchema extends BaseSchema<Integer> {
     public NumberSchema() {
-        addFilter("required", (value ->
-                !isRequired || value != null)
-        );
-
-    }
-
-    public NumberSchema required() {
-        isRequired = true;
-        return this;
+        System.out.println("NumberSchema constructor " + isRequired);
+        addFilter("required", (value -> !isRequired || (isRequired && value != null)));
     }
 
     public NumberSchema positive() {
-        addFilter("positive", (value -> !isRequired || value > 0));
+        addFilter("positive", (value -> !isRequired || (isRequired && value != null && value.intValue() > 0)));
         return this;
     }
 

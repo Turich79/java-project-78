@@ -2,30 +2,21 @@ package hexlet.code.schemas;
 
 import java.util.Map;
 
-public final class MapSchema extends BaseSchema {
-    public MapSchema required() {
-        addFilter("required", (value ->
-                value instanceof Map<?, ?> && !(value == null)));
-        return this;
+public final class MapSchema<K, V> extends BaseSchema<Map<K, V>> {
+    public MapSchema() {
+        addFilter("required", (value -> !isRequired || (isRequired && value != null)));
     }
 
     public MapSchema sizeof(int size) {
-        addFilter("sizeof", (value -> value instanceof Map<?, ?> && ((Map<?, ?>) value).size() == size));
+        addFilter("sizeof", (value -> value.size() == size));
         return this;
     }
 
-    public MapSchema shape(Map<String, BaseSchema> schemasMap) {
-        addFilter("shape", map -> check((Map<String, BaseSchema>) map, schemasMap));
-        return this;
-    }
-
-    public boolean check(Map<String, BaseSchema> baseMap, Map<String, BaseSchema> schemasMap) {
-        for (var pair : schemasMap.entrySet()) {
-            var key = pair.getKey();
-            if (!pair.getValue().isValid(baseMap.get(key))) {
-                return false;
-            }
+    public void shape(Map<String, BaseSchema<V>> schemas) {
+        if (schemas != null) {
+            schemas.keySet()
+                    .forEach(key -> addFilter("shape:" + key,
+                            map -> schemas.get(key).isValid(map.get(key))));
         }
-        return true;
     }
 }

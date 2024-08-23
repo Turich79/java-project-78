@@ -13,10 +13,8 @@ public abstract class BaseSchema<T> {
     }
 
     public final boolean isValid(T data) {
-        var isNotNull = mapOfRules.get("required").test(data);
-        System.out.println("isNotNull" + isNotNull + ",isRequired" + isRequired);
-        if (!isRequired && !isNotNull) {
-            return true;
+        if (data == null) {
+            return mapOfRules.get("required").test(data);
         }
 
         var entries = mapOfRules.entrySet();
@@ -29,7 +27,8 @@ public abstract class BaseSchema<T> {
         return true;
     }
 
-    public final Map<String, Predicate<T>> getMapOfRules() {
-        return mapOfRules;
+    public BaseSchema required() {
+        isRequired = true;
+        return this;
     }
 }

@@ -3,8 +3,7 @@ package hexlet.code.schemas;
 public final class StringSchema extends BaseSchema<String> {
     public StringSchema() {
         addFilter("required", (value ->
-            !isRequired || (value != null && !"".equals(value))
-        ));
+                !isRequired || (isRequired && value != null && !"".equals(value))));
     }
 
     public StringSchema minLength(int num) {
