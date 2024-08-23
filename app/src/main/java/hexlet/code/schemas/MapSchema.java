@@ -19,4 +19,9 @@ public final class MapSchema<K, V> extends BaseSchema<Map<K, V>> {
                             map -> schemas.get(key).isValid(map.get(key))));
         }
     }
+
+    public MapSchema<K, V> required() {
+        isRequired = true;
+        return this;
+    }
 }

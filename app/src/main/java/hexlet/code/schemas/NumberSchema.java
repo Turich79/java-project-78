@@ -15,4 +15,9 @@ public final class NumberSchema extends BaseSchema<Integer> {
         addFilter("range", (value -> value >= min && value <= max));
         return this;
     }
+
+    public NumberSchema required() {
+        isRequired = true;
+        return this;
+    }
 }
