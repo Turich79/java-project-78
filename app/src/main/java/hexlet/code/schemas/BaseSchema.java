@@ -13,8 +13,11 @@ public abstract class BaseSchema<T> {
     }
 
     public final boolean isValid(T data) {
-        if (data == null) {
-            return mapOfRules.get("required").test(data);
+        var flgRequired = mapOfRules.get("required").test(data);
+        if (!isRequired && !flgRequired) {
+            return true;
+        } else if (isRequired &&  !flgRequired) {
+            return false;
         }
 
         var entries = mapOfRules.entrySet();

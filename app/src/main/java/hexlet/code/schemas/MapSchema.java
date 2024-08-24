@@ -4,7 +4,7 @@ import java.util.Map;
 
 public final class MapSchema<K, V> extends BaseSchema<Map<K, V>> {
     public MapSchema() {
-        addFilter("required", (value -> !isRequired || (isRequired && value != null)));
+        addFilter("required", (value -> value != null));
     }
 
     public MapSchema sizeof(int size) {
