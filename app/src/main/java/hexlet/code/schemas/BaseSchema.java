@@ -1,11 +1,11 @@
 package hexlet.code.schemas;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
 public abstract class BaseSchema<T> {
-    private final Map<String, Predicate<T>> mapOfRules = new HashMap<>();
+    private final Map<String, Predicate<T>> mapOfRules = new LinkedHashMap<>();
     protected boolean isRequired;
 
     protected final void addFilter(String key, Predicate<T> value) {
@@ -14,19 +14,16 @@ public abstract class BaseSchema<T> {
 
     public final boolean isValid(T data) {
         var flgRequired = mapOfRules.get("required").test(data);
-        if (!isRequired && !flgRequired) {
+
+        if (!flgRequired && !isRequired) {
             return true;
-        } else if (isRequired &&  !flgRequired) {
-            return false;
         }
 
-        var entries = mapOfRules.entrySet();
-        for (var entry : entries) {
-            var flag = entry.getValue().test(data);
-            if (!flag) {
-                return false;
-            }
+        try {
+            return mapOfRules.values().stream()
+                    .allMatch(predicate -> predicate.test(data));
+        } catch (ClassCastException e) {
+            return false;
         }
-        return true;
     }
 }
