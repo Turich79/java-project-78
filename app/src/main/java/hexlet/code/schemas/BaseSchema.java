@@ -19,11 +19,7 @@ public abstract class BaseSchema<T> {
             return true;
         }
 
-        try {
-            return mapOfRules.values().stream()
-                    .allMatch(predicate -> predicate.test(data));
-        } catch (ClassCastException e) {
-            return false;
-        }
+        return mapOfRules.values().stream()
+                .allMatch(predicate -> predicate.test(data));
     }
 }
